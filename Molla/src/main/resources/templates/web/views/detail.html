@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-web.html}">
+
+<!-- molla/detail.html  14 Apr 2024 15:05:00 GMT -->
+
+<body>
+	<div layout:fragment="content">
+		<div class="page-wrapper">
+			<main class="main">
+				<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+					<div class="container d-flex align-items-center">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="login">Trang chủ</a></li>
+							<li class="breadcrumb-item"><a href="product">Sản phẩm</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Chi tiết</li>
+						</ol>
+					</div><!-- End .container -->
+				</nav><!-- End .breadcrumb-nav -->
+
+				<div class="page-content">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-9">
+								<div class="product-details-top">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="product-gallery">
+												<figure class="product-main-image">
+													<div th:if="${product.state==1}">
+														<span class="product-label label-new">New</span>
+													</div>
+													<div th:if="${product.state==2}">
+														<span class="product-label label-top">Top</span>
+													</div>
+													<div th:if="${product.state==3}">
+														<span class="product-label label-sale">Sale</span>
+													</div>
+													<img id="product-zoom"
+														style="width:458px;height:458px;object-fit: contain;background-color: white;"
+														th:src="'assets/images/products/'+${product.picture}"
+														th:data-zoom-image="'assets/images/products/zoompicture/zoom_'+${product.picture}"
+														alt="product image">
+
+													<a href="#" id="btn-product-gallery" class="btn-product-gallery">
+														<i class="icon-arrows"></i>
+													</a>
+												</figure><!-- End .product-main-image -->
+
+												<div id="product-zoom-gallery" class="product-image-gallery">
+													<a th:each="sub : ${product.subPicture}"
+														class="product-gallery-item" href="#"
+														th:data-image="'assets/images/products/subpictures/sub_'+${sub.picture}"
+														th:data-zoom-image="'assets/images/products/zoompicture/zoom_'+${sub.picture}">
+														<img th:src="'assets/images/products/subpictures/sub_'+${sub.picture}"
+															alt="product side">
+													</a>
+												</div><!-- End .product-image-gallery -->
+											</div><!-- End .product-gallery -->
+										</div><!-- End .col-md-6 -->
+
+										<div class="col-md-6">
+											<div class="product-details product-details-sidebar">
+												<h1 class="product-title" th:text="${product.name}"></h1>
+												<!-- End .product-title -->
+
+												<div class="ratings-container">
+													<div class="ratings">
+														<div class="ratings-val"
+															th:style="'width: ' + (20 * ${product.rating}) + '%;'">
+														</div>
+														<!-- End .ratings-val -->
+													</div><!-- End .ratings -->
+													<a class="ratings-text" href="#product-review-link" id="review-link"
+														th:text="'('+${product.review.size()+' đánh giá)'}"></a>
+												</div><!-- End .rating-container -->
+
+												<div class="product-price"
+													th:text="${#numbers.formatDecimal(product.selling_price, 0, 'COMMA', 0, 'POINT')}+'₫'">
+												</div><!-- End .product-price -->
+
+												<div class="product-content" th:text="${product.description}">
+												</div><!-- End .product-content -->
+
+												<div class="product-details-action">
+													<div class="details-action-col">
+														<label for="quantity" th:text="'Số lượng:' "></label>
+														<div class="product-details-quantity">
+															<input type="number" id="quantity" class="form-control"
+																value="1" min="1" step="1" data-decimals="0" required>
+														</div><!-- End .product-details-quantity -->
+
+														<button class="btn-product btn-cart" th:id="${product.id}"
+															onclick="clickToAddCart(id)"><span>Thêm vào giỏ
+																hàng</span></button>
+													</div><!-- End .details-action-col -->
+
+													<div class="details-action-wrapper">
+														<a class="btn-product btn-wishlist" title="Wishlist"
+															th:id="${product.id}"
+															onclick="clickToAddFavourite(id)"><span>Yêu Thích</span></a>
+													</div><!-- End .details-action-wrapper -->
+												</div><!-- End .product-details-action -->
+
+												<div class="product-details-footer details-footer-col">
+													<div class="product-cat">
+														<span>Danh mục:</span>
+														<a th:href="'product?cate_id='+${product.category.id}"
+															th:text="${product.category.name}"></a>
+													</div><!-- End .product-cate -->
+													<div class="product-cat">
+														<span>Nhà sản xuất:</span>
+														<a th:href="'product?manu_id='+${product.manufacturer.id}"
+															th:text="${product.manufacturer.name}"></a>
+													</div><!-- End .product-manu -->
+													<div class="social-icons social-icons-sm">
+														<span class="social-label">Share:</span>
+														<a href="#" class="social-icon" title="Facebook"
+															target="_blank"><i class="icon-facebook-f"></i></a>
+														<a href="#" class="social-icon" title="Twitter"
+															target="_blank"><i class="icon-twitter"></i></a>
+														<a href="#" class="social-icon" title="Instagram"
+															target="_blank"><i class="icon-instagram"></i></a>
+														<a href="#" class="social-icon" title="Pinterest"
+															target="_blank"><i class="icon-pinterest"></i></a>
+													</div>
+												</div><!-- End .product-details-footer -->
+											</div><!-- End .product-details -->
+										</div><!-- End .col-md-6 -->
+									</div><!-- End .row -->
+								</div><!-- End .product-details-top -->
+
+								<div class="product-details-tab">
+									<ul class="nav nav-pills justify-content-center" role="tablist">
+										<li class="nav-item">
+											<a class="nav-link active" id="product-desc-link" data-toggle="tab"
+												href="#product-desc-tab" role="tab" aria-controls="product-desc-tab"
+												aria-selected="true">Chính sách giao hàng</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="product-shipping-link" data-toggle="tab"
+												href="#product-shipping-tab" role="tab"
+												aria-controls="product-shipping-tab" aria-selected="false">Chính sách
+												bảo hành</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="product-review-link" data-toggle="tab"
+												href="#product-review-tab" role="tab" aria-controls="product-review-tab"
+												aria-selected="false" th:text="'Đánh giá ('+${countReview}+')'"></a>
+										</li>
+									</ul>
+									<div class="tab-content">
+										<div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel"
+											aria-labelledby="product-desc-link">
+											<div class="product-desc-content">
+												<h3>Chính sách giao hàng</h3>
+												<p>Chúng tôi cam kết giao hàng nhanh chóng và an toàn đến tất cả các
+													tỉnh thành trong lãnh thổ Việt Nam. Dưới đây là các thông tin chi
+													tiết về chính sách giao hàng của chúng tôi:</p>
+												<ul>
+													<li><strong>Thời gian giao hàng:</strong>
+														<ul>
+															<li>Khu vực nội thành: 1-2 ngày làm việc</li>
+															<li>Khu vực ngoại thành và các tỉnh thành khác: 3-5 ngày làm
+																việc</li>
+														</ul>
+													</li>
+													<li><strong>Phí giao hàng:</strong>
+														<ul>
+															<li>Miễn phí giao hàng cho đơn hàng từ 1,000,000 VNĐ trở lên
+															</li>
+															<li>Đơn hàng dưới 1,000,000 VNĐ sẽ tính phí giao hàng 30,000
+																VNĐ</li>
+														</ul>
+													</li>
+													<li><strong>Đơn vị vận chuyển:</strong> Chúng tôi hợp tác với các
+														đơn vị vận chuyển uy tín như Viettel Post, Giao Hàng Nhanh để
+														đảm bảo hàng hóa được giao đến tay khách hàng một cách nhanh
+														chóng và an toàn.</li>
+													<li><strong>Theo dõi đơn hàng:</strong> Sau khi đơn hàng được gửi
+														đi, chúng tôi sẽ cung cấp mã theo dõi để khách hàng có thể kiểm
+														tra trạng thái đơn hàng của mình.</li>
+													<li><strong>Chính sách xử lý khi hàng hóa bị hư hỏng:</strong> Nếu
+														hàng hóa bị hư hỏng trong quá trình vận chuyển, chúng tôi sẽ hỗ
+														trợ đổi mới hoặc hoàn tiền 100% cho khách hàng.</li>
+												</ul>
+												<p>Để biết thêm chi tiết, vui lòng liên hệ với chúng tôi qua hotline
+													hoặc email. Cảm ơn bạn đã tin tưởng và sử dụng dịch vụ của chúng
+													tôi!</p>
+											</div><!-- End .product-desc-content -->
+										</div><!-- .End .tab-pane -->
+										<div class="tab-pane fade" id="product-shipping-tab" role="tabpanel"
+											aria-labelledby="product-shipping-link">
+											<div class="product-desc-content">
+												<h3>Chính sách bảo hành</h3>
+												<p>Chúng tôi cam kết mang đến cho quý khách hàng những sản phẩm chất
+													lượng cao cùng dịch vụ bảo hành uy tín. Dưới đây là các thông tin
+													chi tiết về chính sách bảo hành của chúng tôi:</p>
+												<ul>
+													<li><strong>Thời gian bảo hành:</strong>
+														<ul>
+															<li>Các sản phẩm điện tử: 12 tháng kể từ ngày mua hàng.</li>
+															<li>Phụ kiện điện tử: 6 tháng kể từ ngày mua hàng.</li>
+														</ul>
+													</li>
+													<li><strong>Điều kiện bảo hành:</strong>
+														<ul>
+															<li>Sản phẩm còn trong thời gian bảo hành và có phiếu bảo
+																hành hoặc hóa đơn mua hàng.</li>
+															<li>Sản phẩm bị lỗi kỹ thuật do nhà sản xuất.</li>
+															<li>Không áp dụng bảo hành cho các trường hợp sau:
+																<ul>
+																	<li>Sản phẩm bị hư hỏng do sử dụng sai cách, rơi vỡ,
+																		va đập mạnh.</li>
+																	<li>Sản phẩm bị thay đổi, sửa chữa bởi bên thứ ba
+																		không được ủy quyền.</li>
+																	<li>Sản phẩm bị hư hỏng do thiên tai, hỏa hoạn, lũ
+																		lụt, hoặc các sự cố bất khả kháng khác.</li>
+																</ul>
+															</li>
+														</ul>
+													</li>
+													<li><strong>Quy trình bảo hành:</strong>
+														<ul>
+															<li>Liên hệ với chúng tôi qua hotline hoặc email để thông
+																báo về sự cố sản phẩm.</li>
+															<li>Gửi sản phẩm kèm theo phiếu bảo hành hoặc hóa đơn mua
+																hàng về trung tâm bảo hành của chúng tôi.</li>
+															<li>Sau khi kiểm tra, nếu sản phẩm đủ điều kiện bảo hành,
+																chúng tôi sẽ tiến hành sửa chữa hoặc thay thế sản phẩm
+																mới cho quý khách trong vòng 7-14 ngày làm việc.</li>
+														</ul>
+													</li>
+													<li><strong>Dịch vụ sau bảo hành:</strong>
+														<ul>
+															<li>Đối với các sản phẩm đã hết thời gian bảo hành, chúng
+																tôi vẫn hỗ trợ sửa chữa với chi phí ưu đãi.</li>
+														</ul>
+													</li>
+												</ul>
+												<p>Chúng tôi luôn nỗ lực mang đến sự hài lòng tối đa cho khách hàng. Nếu
+													có bất kỳ thắc mắc hoặc yêu cầu hỗ trợ nào, vui lòng liên hệ với
+													chúng tôi qua hotline hoặc email.</p>
+											</div><!-- End .product-desc-content -->
+										</div><!-- .End .tab-pane -->
+										<div class="tab-pane fade" id="product-review-tab" role="tabpanel"
+											aria-labelledby="product-review-link">
+											<div class="reviews">
+												<h3>Đánh giá</h3>
+												<div class="review" th:each="review : ${reviews}">
+													<div class="row no-gutters">
+														<div class="col-auto">
+															<h4 th:text="${review.user.fullname}"></h4>
+															<div class="ratings-container">
+																<div class="ratings">
+																	<div class="ratings-val"
+																		th:style="'width: ' + (20 * ${review.rating}) + '%;'">
+																	</div><!-- End .ratings-val -->
+																</div><!-- End .ratings -->
+															</div><!-- End .rating-container -->
+															<span class="review-date"
+																th:text="${review.review_date}"></span>
+														</div><!-- End .col -->
+														<div class="col">
+															<h4 th:text="${review.title}"></h4>
+
+															<div class="review-content">
+																<p th:text="${review.content}"></p>
+															</div><!-- End .review-content -->
+														</div><!-- End .col-auto -->
+													</div><!-- End .row -->
+												</div><!-- End .review -->
+											</div><!-- End .reviews -->
+										</div><!-- .End .tab-pane -->
+									</div><!-- End .tab-content -->
+								</div><!-- End .product-details-tab -->
+
+
+
+								<h2 class="title text-center mb-4">Cùng danh mục</h2><!-- End .title text-center -->
+								<div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow"
+									data-toggle="owl" data-owl-options='{
+                                    "nav": false, 
+                                    "dots": true,
+                                    "margin": 20,
+                                    "loop": false,
+                                    "responsive": {
+                                        "0": {
+                                            "items":1
+                                        },
+                                        "480": {
+                                            "items":2
+                                        },
+                                        "768": {
+                                            "items":3
+                                        },
+                                        "992": {
+                                            "items":4
+                                        },
+                                        "1200": {
+                                            "items":4,
+                                            "nav": true,
+                                            "dots": false
+                                        }
+                                    }
+                                }'>
+									<div class="product product-7 text-center" th:each="product : ${categories}">
+										<figure class="product-media">
+											<div th:if="${product.state==1}">
+												<span class="product-label label-new">New</span>
+											</div>
+											<div th:if="${product.state==2}">
+												<span class="product-label label-top">Top</span>
+											</div>
+											<div th:if="${product.state==3}">
+												<span class="product-label label-sale">Sale</span>
+											</div>
+											<a th:href="'detail?id='+${product.id}">
+												<img th:src="'assets/images/products/'+${product.picture}"
+													alt="Product image" class="product-image">
+											</a>
+
+											<div class="product-action-vertical">
+												<a th:id="${product.id}"
+													class="btn-product-icon btn-wishlist btn-expandable"
+													title="Favourite" onclick="clickToAddFavourite(id)"><span>Yêu
+														thích</span></a>
+											</div><!-- End .product-action-vertical -->
+
+											<div class="product-action">
+												<a th:id="${product.id}" class="btn-product btn-cart"
+													onclick="clickToAddCart(id)">
+													<span>Thêm giỏ hàng</span></a>
+											</div><!-- End .product-action -->
+										</figure><!-- End .product-media -->
+
+										<div class="product-body">
+											<div class="product-cat">
+												<a th:href="'product?cate_id='+${product.category.id}"
+													th:text="${product.category.name}"></a>
+											</div><!-- End .product-cat -->
+											<h3 class="product-title"><a th:href="'detail?id='+${product.id}"
+													th:text="${product.name}"></a></h3><!-- End .product-title -->
+											<div class="product-price" th:text="${product.selling_price}">
+											</div><!-- End .product-price -->
+											<div class="ratings-container">
+												<div class="ratings">
+													<div class="ratings-val"
+														th:style="'width: ' + (20 * ${product.rating}) + '%;'"></div>
+													<!-- End .ratings-val -->
+												</div><!-- End .ratings -->
+												<span class="ratings-text"
+													th:text="'( '+${product.review.size()}+' đánh giá)'"></span>
+											</div><!-- End .rating-container -->
+											<!--
+                                        <div class="product-nav product-nav-dots">
+                                            <a href="#" class="active" style="background: #cc9966;"><span class="sr-only">Color name</span></a>
+                                            <a href="#" style="background: #7fc5ed;"><span class="sr-only">Color name</span></a>
+                                            <a href="#" style="background: #e8c97a;"><span class="sr-only">Color name</span></a>
+                                        </div>End .product-nav -->
+										</div><!-- End .product-body -->
+									</div><!-- End .product -->
+								</div><!-- End .owl-carousel -->
+								<h2 class="title text-center mb-4">Cùng nhà sản xuất</h2><!-- End .title text-center -->
+								<div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow"
+									data-toggle="owl" data-owl-options='{
+                                    "nav": false, 
+                                    "dots": true,
+                                    "margin": 20,
+                                    "loop": false,
+                                    "responsive": {
+                                        "0": {
+                                            "items":1
+                                        },
+                                        "480": {
+                                            "items":2
+                                        },
+                                        "768": {
+                                            "items":3
+                                        },
+                                        "992": {
+                                            "items":4
+                                        },
+                                        "1200": {
+                                            "items":4,
+                                            "nav": true,
+                                            "dots": false
+                                        }
+                                    }
+                                }'>
+									<div class="product product-7 text-center" th:each="product : ${categories}">
+										<figure class="product-media">
+											<div th:if="${product.state==1}">
+												<span class="product-label label-new">New</span>
+											</div>
+											<div th:if="${product.state==2}">
+												<span class="product-label label-top">Top</span>
+											</div>
+											<div th:if="${product.state==3}">
+												<span class="product-label label-sale">Sale</span>
+											</div>
+											<a th:href="'detail?id='+${product.id}">
+												<img th:src="'assets/images/products/'+${product.picture}"
+													alt="Product image" class="product-image">
+											</a>
+
+											<div class="product-action-vertical">
+												<a th:id="${product.id}"
+													class="btn-product-icon btn-wishlist btn-expandable"
+													title="Favourite" onclick="clickToAddFavourite(id)"><span>Yêu
+														thích</span></a>
+											</div><!-- End .product-action-vertical -->
+
+											<div class="product-action">
+												<a th:id="${product.id}" class="btn-product btn-cart"
+													onclick="clickToAddCart(id)"><span>Thêm
+														giỏ hàng</span></a>
+											</div><!-- End .product-action -->
+										</figure><!-- End .product-media -->
+
+										<div class="product-body">
+											<div class="product-cat">
+												<a th:href="'product?cate_id='+${product.category.id}"
+													th:text="${product.category.name}"></a>
+											</div><!-- End .product-cat -->
+											<h3 class="product-title"><a th:href="'detail?id='+${product.id}"
+													th:text="${product.name}"></a></h3><!-- End .product-title -->
+											<div class="product-price" th:text="${product.selling_price}">
+											</div><!-- End .product-price -->
+											<div class="ratings-container">
+												<div class="ratings">
+													<div class="ratings-val"
+														th:style="'width: ' + (20 * ${product.rating}) + '%;'"></div>
+													<!-- End .ratings-val -->
+												</div><!-- End .ratings -->
+												<span class="ratings-text"
+													th:text="'( '+${product.review.size()}+' đánh giá)'"></span>
+											</div><!-- End .rating-container -->
+											<!--
+                                        <div class="product-nav product-nav-dots">
+                                            <a href="#" class="active" style="background: #cc9966;"><span class="sr-only">Color name</span></a>
+                                            <a href="#" style="background: #7fc5ed;"><span class="sr-only">Color name</span></a>
+                                            <a href="#" style="background: #e8c97a;"><span class="sr-only">Color name</span></a>
+                                        </div> End .product-nav -->
+
+										</div><!-- End .product-body -->
+									</div><!-- End .product -->
+								</div><!-- End .owl-carousel -->
+							</div><!-- End .col-lg-9 -->
+
+							<aside class="col-lg-3">
+								<div class="sidebar sidebar-product">
+									<div class="widget widget-products">
+										<h4 class="widget-title">Sản phẩm bán chạy</h4><!-- End .widget-title -->
+
+										<div class="products" th:each="product : ${top4_product}">
+											<div class="product product-sm">
+												<figure class="product-media">
+													<a th:href="'detail?id='+${product.id}">
+														<img th:src="'assets/images/products/'+${product.picture}"
+															alt="Product image" class="product-image">
+													</a>
+												</figure>
+
+												<div class="product-body">
+													<h5 class="product-title"><a th:href="'detail?id='+${product.id}"
+															th:text="${product.name}"></a></h5>
+													<!-- End .product-title -->
+													<div class="product-price">
+														<span class="new-price"
+															th:text="${product.selling_price}"></span>
+													</div><!-- End .product-price -->
+												</div><!-- End .product-body -->
+											</div><!-- End .product product-sm -->
+										</div><!-- End .products -->
+
+										<a href="product" class="btn btn-outline-dark-3"><span>Xem thêm</span><i
+												class="icon-long-arrow-right"></i></a>
+									</div><!-- End .widget widget-products -->
+
+									<div class="widget widget-banner-sidebar">
+										<div class="banner-sidebar-title">Quảng cáo 280 x 280</div>
+										<!-- End .ad-title -->
+
+										<div class="banner-sidebar banner-overlay">
+											<a href="#">
+												<img src="assets/images/advertisement/sidebar/banner.jpg" alt="banner">
+											</a>
+										</div><!-- End .banner-ad -->
+									</div><!-- End .widget -->
+								</div><!-- End .sidebar sidebar-product -->
+							</aside><!-- End .col-lg-3 -->
+						</div><!-- End .row -->
+
+					</div><!-- End .container -->
+				</div><!-- End .page-content -->
+			</main><!-- End .main -->
+
+		</div><!-- End .page-wrapper -->
+		<button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+		<!-- Mobile Menu -->
+		<div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+	</div>
+</body>
+<!-- molla/product-sidebar.html  22 Nov 2019 10:03:37 GMT -->
+
+</html>

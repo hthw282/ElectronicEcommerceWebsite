@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="~{admin/fragments/head :: head}">
+</head>
+
+<body>
+	<header th:replace="~{admin/fragments/header :: header}"></header>
+	<!-- =============================================== -->
+
+	<!-- Left side column. contains the sidebar -->
+
+	<div th:replace="~{admin/fragments/sidebar :: sidebar}"></div>
+	<!-- =============================================== -->
+	<!-- Content fragment -->
+	<div layout:fragment="content">
+		<!-- Content from individual pages will replace this div -->
+	</div>
+
+	<!-- Footer fragment -->
+	<footer th:replace="~{admin/fragments/footer :: footer}"></footer>
+	<!-- Footer content goes here -->
+	<p>&copy; 2024 My Website</p>
+
+
+	<script src="script.js"></script>
+
+	<script th:src="@{/admin/js/jquery.min.js}"></script>
+	<script th:src="@{/admin/js/jquery-ui.js}"></script>
+	<script th:src="@{/admin/js/bootstrap.min.js}"></script>
+	<script th:src="@{/admin/js/adminlte.min.js}"></script>
+	<script th:src="@{/admin/js/dashboard.js}"></script>
+	<script th:src="@{/admin/tinymce/tinymce.min.js}"></script>
+	<script th:src="@{/admin/tinymce/config.js}"></script>
+	<script th:src="@{/admin/js/function.js}"></script>
+</body>
+
+</html>

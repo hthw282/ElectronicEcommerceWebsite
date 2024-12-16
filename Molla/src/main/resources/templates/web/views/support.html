@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-web.html}">
+
+<body>
+	<div layout:fragment="content">
+		<div class="page-wrapper">
+			<main class="main">
+				<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+					<div class="container">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a th:href="home">Trang chủ</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Chăm sóc khách hàng</li>
+						</ol>
+					</div><!-- End .container -->
+				</nav><!-- End .breadcrumb-nav -->
+				<div class="page-content pb-0">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-6 mb-2 mb-lg-0">
+								<h2 class="title mb-1">Thông tin liên lạc</h2><!-- End .title mb-2 -->
+								<p class="mb-3"></p>
+								<div class="row">
+									<div class="col-sm-7">
+										<div class="contact-info">
+											<h3>Văn phòng</h3>
+
+											<ul class="contact-list">
+												<li>
+													<i class="icon-map-marker"></i>
+													Hẻm 148, đường số 59, phương 14, quận Gò Vấp, tp.HCM
+												</li>
+												<li>
+													<i class="icon-phone"></i>
+													<a href="tel:#">0981141044</a>
+												</li>
+												<li>
+													<i class="icon-envelope"></i>
+													<a href="mailto:#">hungphong.congviec@gmail.com</a>
+												</li>
+											</ul><!-- End .contact-list -->
+										</div><!-- End .contact-info -->
+									</div><!-- End .col-sm-7 -->
+
+									<div class="col-sm-5">
+										<div class="contact-info">
+											<h3>Văn phòng</h3>
+
+											<ul class="contact-list">
+												<li>
+													<i class="icon-clock-o"></i>
+													<span class="text-dark">Thứ 2 - Thứ 7</span> <br>8h - 17h
+												</li>
+												<li>
+													<i class="icon-calendar"></i>
+													<span class="text-dark">Chủ nhật</span> <br>11h - 17h
+												</li>
+											</ul><!-- End .contact-list -->
+										</div><!-- End .contact-info -->
+									</div><!-- End .col-sm-5 -->
+								</div><!-- End .row -->
+							</div><!-- End .col-lg-6 -->
+							<div class="col-lg-6">
+								<h2 class="title mb-1">Bạn có muốn hỏi gì không?</h2><!-- End .title mb-2 -->
+								<p class="mb-2">Sử dụng form dưới đây để đặt câu hỏi cho shop</p>
+
+								<form action="support" method="post" th:object="${spMessage}" class="contact-form mb-3">
+									<div class="row">
+										<div class="col-sm-6">
+											<label for="cname" class="sr-only">Họ Tên</label>
+											<input type="text" class="form-control" id="cname" placeholder="Name *"
+												th:field="*{name}" required>
+										</div><!-- End .col-sm-6 -->
+
+										<div class="col-sm-6">
+											<label for="cemail" class="sr-only">Email</label>
+											<input type="email" class="form-control" id="cemail" placeholder="Email *"
+												th:field="*{email}" required>
+										</div><!-- End .col-sm-6 -->
+									</div><!-- End .row -->
+
+									<label for="cmessage" class="sr-only">Câu hỏi</label>
+									<textarea class="form-control" cols="30" rows="4" id="cmessage" required
+										th:field="*{question}" placeholder="Message *"></textarea>
+
+									<button type="submit" class="btn btn-outline-primary-2 btn-minwidth-sm">
+										<span>Gửi</span>
+										<i class="icon-long-arrow-right"></i>
+									</button>
+								</form><!-- End .contact-form -->
+							</div><!-- End .col-lg-6 -->
+						</div><!-- End .row -->
+					</div>
+				</div>
+				<hr class="mt-4 mb-5">
+				<div class="page-content">
+					<div th:each="message:${messages}" class="container">
+						<h2 class="title" th:text="${message.question}"></h2><!-- End .title -->
+						<p class="title-desc" th:text="'Khách hàng: '+${message.name}"></p>
+						<!-- End .title-desc -->
+						<p style="margin-top: 10px;" th:text="${message.answer}"></p>
+						<hr class="mt-4 mb-4">
+					</div>
+				</div><!-- End .page-content -->
+			</main><!-- End .main -->
+
+		</div><!-- End .page-wrapper -->
+		<button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+	</div>
+</body>
+
+
+<!-- molla/404.html  22 Nov 2019 10:04:04 GMT -->
+
+</html>

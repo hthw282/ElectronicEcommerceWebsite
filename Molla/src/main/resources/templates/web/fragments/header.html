@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Header Fragment</title>
+</head>
+
+<body>
+	<!-- Header content -->
+	<header class="header header-intro-clearance header-3" th:fragment="header">
+		<div class="header-top">
+			<div class="container">
+				<div class="header-left">
+					<a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a>
+				</div><!-- End .header-left -->
+
+				<div class="header-right">
+
+					<ul class="top-menu">
+						<li>
+							<ul>
+								<li sec:authorize="!isAuthenticated">
+									<a th:href="@{/login}">Sign in / Sign up</a>
+								</li>
+								<li sec:authorize="isAuthenticated">
+									<div class="header-dropdown">
+										<a href="#" th:text="'Hi, '+${account.username}"></a>
+										<div class="header-menu">
+											<ul>
+												<li><a href="customer">Account</a></li>
+												<li><a th:href="@{/logout}">Sign out</a></li>
+											</ul>
+										</div><!-- End .header-menu -->
+									</div>
+								</li>
+							</ul>
+						</li>
+					</ul><!-- End .top-menu -->
+				</div><!-- End .header-right -->
+
+			</div><!-- End .container -->
+		</div><!-- End .header-top -->
+
+		<div class="header-middle">
+			<div class="container">
+				<div class="header-left">
+					<button class="mobile-menu-toggler">
+						<span class="sr-only">Toggle mobile menu</span>
+						<i class="icon-bars"></i>
+					</button>
+
+					<a th:href="home" class="logo">
+						<img src="assets/images/demos/demo-3/logo.png" alt="Molla Logo" width="105" height="25">
+					</a>
+				</div><!-- End .header-left -->
+
+				<div class="header-center">
+					<div class="header-search header-search-extended header-search-visible d-none d-lg-block">
+						<a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
+						<form th:action="search" method="get">
+							<div class="header-search-wrapper search-wrapper-wide">
+								<label for="q" class="sr-only">Search</label>
+								<button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+								<input type="search" class="form-control" name="q" id="q"
+									placeholder="Tìm kiếm sản phẩm" required>
+							</div><!-- End .header-search-wrapper -->
+						</form>
+					</div><!-- End .header-search -->
+				</div>
+
+				<div class="header-right">
+					<div class="dropdown compare-dropdown">
+						<a th:href="favourite" class="dropdown-toggle">
+							<div class="icon">
+								<i class="icon-heart-o"></i>
+							</div>
+							<p>Wishlist</p>
+						</a>
+					</div><!-- End .compare-dropdown -->
+
+					<div class="dropdown compare-dropdown">
+						<a th:href="cart" class="dropdown-toggle">
+							<div class="icon">
+								<i class="icon-shopping-cart"></i>
+							</div>
+							<p>Giỏ hàng</p>
+						</a>
+
+					</div><!-- End .cart-dropdown -->
+				</div><!-- End .header-right -->
+			</div><!-- End .container -->
+		</div><!-- End .header-middle -->
+
+		<div class="header-bottom sticky-header">
+			<div class="container">
+				<div class="header-left">
+					<div class="dropdown category-dropdown">
+						<a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false" data-display="static" title="Browse Categories">
+							Danh mục<i class="icon-angle-down"></i>
+						</a>
+
+						<div class="dropdown-menu">
+							<nav class="side-nav">
+								<ul class="menu-vertical sf-arrows" th:each="category : ${categories}">
+									<li><a th:href="'product?cate_id='+${category.id}" th:text="${category.name}"></a>
+									</li>
+								</ul><!-- End .menu-vertical -->
+							</nav><!-- End .side-nav -->
+						</div><!-- End .dropdown-menu -->
+					</div><!-- End .category-dropdown -->
+				</div><!-- End .header-left -->
+
+				<div class="header-center">
+					<nav class="main-nav">
+						<ul class="menu sf-arrows">
+							<li class="megamenu-container"
+								th:class="${urlPage != null and urlPage == 'home' ? 'active' : ''}">
+								<a th:href="home">Trang chủ</a>
+							</li>
+							<li class="megamenu-container"
+								th:class="${urlPage != null and urlPage == 'product' ? 'active' : ''}">
+								<a th:href="product">Sản phẩm</a>
+							</li>
+							<li class="megamenu-container"
+								th:class="${urlPage != null and urlPage == 'support' ? 'active' : ''}">
+								<a th:href="support">Chăm sóc khách hàng</a>
+							</li>
+						</ul><!-- End .menu -->
+					</nav><!-- End .main-nav -->
+				</div><!-- End .header-center -->
+			</div><!-- End .container -->
+		</div><!-- End .header-bottom -->
+	</header><!-- End .header -->
+
+</body>
+
+</html>

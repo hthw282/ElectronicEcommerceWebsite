@@ -1,0 +1,77 @@
+<aside class="main-sidebar" th:fragment="sidebar">
+	<!-- sidebar: style can be found in sidebar.less -->
+	<section class="sidebar">
+		<!-- Sidebar user panel -->
+		<div class="user-panel">
+			<div class="pull-left image">
+				<img th:src="@{images/logo.jpg}" class="img-circle" alt="User Image">
+			</div>
+			<div class="pull-left info">
+				<p>Admin</p>
+				<a th:href="@{/logout}"><i class="fa fa-circle text-success"></i>Đăng xuất</a>
+			</div>
+		</div>
+		<!-- search form -->
+		<form action="#" method="get" class="sidebar-form">
+			<div class="input-group">
+				<input type="text" name="q" class="form-control" placeholder="Search...">
+				<span class="input-group-btn">
+					<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i
+							class="fa fa-search"></i>
+					</button>
+				</span>
+			</div>
+		</form>
+		<!-- /.search form -->
+		<!-- sidebar menu: : style can be found in sidebar.less -->
+
+		<ul class="sidebar-menu" data-widget="tree">
+			<li>
+				<a href="/admin/user">
+					<i class="fa fa-th"></i> <span>Quản lí khách hàng</span>
+				</a>
+			</li>
+			<li>
+				<a href="/admin/product">
+					<i class="fa fa-th"></i> <span>Quản lí sản phẩm</span>
+				</a>
+			</li>
+			<li>
+				<a href="/admin/stock">
+					<i class="fa fa-th"></i> <span>Quản lí kho</span>
+				</a>
+			</li>
+			<li>
+				<a href="/admin/category">
+					<i class="fa fa-th"></i> <span>Quản lí danh mục</span>
+				</a>
+			</li>
+			<li>
+				<a href="/admin/manufacturer">
+					<i class="fa fa-th"></i> <span>Quản lí nhà sản xuất</span>
+				</a>
+			</li>
+			<li>
+				<a href="/admin/bill">
+					<i class="fa fa-th"></i> <span>Quản lí hóa đơn</span>
+				</a>
+			</li>
+			<li>
+				<a href="/admin/promotional-event">
+					<i class="fa fa-th"></i> <span>Quản lí sự kiện</span>
+				</a>
+			</li>
+			<li>
+				<a href="/admin/statistic">
+					<i class="fa fa-th"></i> <span>Thống kê</span>
+				</a>
+			</li>
+			<li>
+				<a href="/admin/revenue">
+					<i class="fa fa-th"></i> <span>Doanh thu</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- /.sidebar -->
+</aside>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-admin.html}">
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper" layout:fragment="content">
+
+		<!-- Content Wrapper. Contains page content -->
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>
+					Quản lí nhà sản xuất
+
+				</h1>
+				<ol class="breadcrumb">
+					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="#">Examples</a></li>
+					<li class="active">Blank page</li>
+				</ol>
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+
+				<!-- Default box -->
+				<div class="col-md-4">
+					<!-- general form elements -->
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Thêm nhà sản xuất</h3>
+						</div>
+						<!-- /.box-header -->
+						<!-- form start -->
+						<form role="form" method="post" th:action="@{/admin/create-manufacturer}"
+							th:object="${manufacturer}" enctype="multipart/form-data">
+							<div class="box-body">
+								<div class="form-group">
+									<label for="exampleInputEmail1">Tên nhà sản xuất</label>
+									<input required type="text" class="form-control" name="name" placeholder="Name"
+										th:field="*{name}">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Hình ảnh</label>
+									<input required type="file" class="form-control" name="FilePicture">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Mô tả</label>
+									<textarea required class="form-control" rows="10" style="resize:none;" name="description"
+										placeholder="mô tả về nhà sản xuất" th:field="*{description}"></textarea>
+								</div>
+
+
+							</div>
+
+					</div>
+					<!-- /.box-body -->
+
+					<div class="box-footer">
+						<button type="submit" class="btn btn-primary">Create</button>
+					</div>
+					</form>
+				</div>
+
+				<!-- /.box -->
+
+		</div>
+		<!-- /.box -->
+
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+	<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+
+	<script th:src="@{/admin/js/jquery.min.js}"></script>
+	<script th:src="@{/admin/js/jquery-ui.js}"></script>
+	<script th:src="@{/admin/js/bootstrap.min.js}"></script>
+	<script th:src="@{/admin/js/adminlte.min.js}"></script>
+	<script th:src="@{/admin/js/dashboard.js}"></script>
+	<script th:src="@{/admin/tinymce/tinymce.min.js}"></script>
+	<script th:src="@{/admin/tinymce/config.js}"></script>
+	<script th:src="@{/admin/js/function.js}"></script>
+</body>
+
+</html>

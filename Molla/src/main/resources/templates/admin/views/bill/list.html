@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-admin.html}">
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper" layout:fragment="content">
+		<!-- Content Wrapper. Contains page content -->
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>Quản lí hóa đơn</h1>
+				<ol class="breadcrumb">
+					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="#">Examples</a></li>
+					<li class="active">Blank page</li>
+				</ol>
+			</section>
+			<!-- Main content -->
+			<section class="content">
+				<!-- Default box -->
+				<div class="col-xs-12">
+					<div class="box">
+						<div class="box-header">
+							<form>
+								<div class="input-group input-group-sm" style="width: 150px;">
+									<input type="text" name="keyword" class="form-control pull-right"
+										placeholder="Search" th:value="*{keyword}">
+
+									<div class="input-group-btn">
+										<button type="submit" class="btn btn-default">
+											<i class="fa fa-search"></i>
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body table-responsive no-padding">
+							<table class="table table-hover">
+								<tbody>
+									<tr>
+										<th>Mã hóa đơn</th>
+										<th>Ngày tạo</th>
+										<th>Tổng sản phẩm</th>
+										<th>Phí ship</th>
+										<th>Thành tiền</th>
+										<th>Trạng thái</th>
+										<th>Tác vụ</th>
+									</tr>
+									<tr th:each="bill: ${bills}">
+										<td th:text="${bill.id}"></td>
+										<td th:text="${bill.bill_date}"></td>
+										<td
+											th:text="${#numbers.formatDecimal(bill.product_price, 0, 'COMMA', 0, 'POINT')}+'₫'">
+										</td>
+										<td th:text="${#numbers.formatDecimal(bill.ship, 0, 'COMMA', 0, 'POINT')}+'₫'">
+										</td>
+										<td
+											th:text="${#numbers.formatDecimal(bill.total_price, 0, 'COMMA', 0, 'POINT')}+'₫'">
+										</td>
+										<td>
+											<p th:if="${bill.state==0}">Chưa thanh toán</p>
+											<p th:if="${bill.state==1}">Đã thanh toán</p>
+											<p th:if="${bill.state==2}">Hủy đơn</p>
+											<p th:if="${bill.state==3}">Đang chuẩn bị</p>
+											<p th:if="${bill.state==4}">Đang vận chuyển</p>
+											<p th:if="${bill.state==5}">Đã giao</p>
+											<p th:if="${bill.state==6}">Đã nhận</p>
+										</td>
+										<td>
+											<a th:href="'bill-detail?id='+${bill.id}" class="btn btn-success">Chi
+												tiết</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- /.box -->
+				</div>
+				<!-- /.box -->
+
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+	</div>
+	<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+
+	<script th:src="@{/admin/js/jquery.min.js}"></script>
+	<script th:src="@{/admin/js/jquery-ui.js}"></script>
+	<script th:src="@{/admin/js/bootstrap.min.js}"></script>
+	<script th:src="@{/admin/js/adminlte.min.js}"></script>
+	<script th:src="@{/admin/js/dashboard.js}"></script>
+	<script th:src="@{/admin/tinymce/tinymce.min.js}"></script>
+	<script th:src="@{/admin/tinymce/config.js}"></script>
+	<script th:src="@{/admin/js/function.js}"></script>
+</body>
+
+</html>

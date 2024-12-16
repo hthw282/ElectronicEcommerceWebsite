@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-web.html}">
+
+<!-- molla/cart.html  14 Apr 2024 15:05:00 GMT -->
+
+<body>
+	<div class="page-wrapper" layout:fragment="content">
+
+		<main class="main">
+			<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+				<div class="container">
+					<h1 class="page-title">Shopping Cart<span>Shop</span></h1>
+				</div><!-- End .container -->
+			</div><!-- End .page-header -->
+			<nav aria-label="breadcrumb" class="breadcrumb-nav">
+				<div class="container">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="home">Trang chủ</a></li>
+						<li class="breadcrumb-item active" aria-current="page">Giỏ hàng</li>
+					</ol>
+				</div><!-- End .container -->
+			</nav><!-- End .breadcrumb-nav -->
+
+			<div class="page-content">
+				<div class="cart">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-9">
+								<table class="table table-cart table-mobile">
+									<thead>
+										<tr>
+											<th>Sản phẩm</th>
+											<th>Giá</th>
+											<th>Số lượng</th>
+											<th>Tổng</th>
+											<th></th>
+										</tr>
+									</thead>
+
+									<tbody>
+										<tr th:each="cart:${carts}" th:id="${cart.id}" name="cart">
+											<td class="product-col">
+												<div class="product">
+													<input type="checkbox" th:id="'cart-'+${cart.id}"
+														class="custom-control-inputtt" onchange="handleSelectProduct()">
+
+													<figure class="product-media ">
+														<a th:href="'detail?id='+${cart.lineItem.product.id}">
+															<img th:src="'assets/images/products/'+${cart.lineItem.product.picture}"
+																alt="Product image">
+														</a>
+													</figure>
+
+													<h3 class="product-title">
+														<a th:href="'detail?id='+${cart.lineItem.product.id}"
+															th:text="${cart.lineItem.product.name}"></a>
+													</h3><!-- End .product-title -->
+												</div><!-- End .product -->
+											</td>
+											<td class="price-col"
+												th:text="${#numbers.formatDecimal(cart.lineItem.product.selling_price, 0, 'COMMA', 0, 'POINT')}+'₫'">
+											</td>
+											<td class="quantity-col">
+												<div class="product-details-quantity">
+													<input type="number" th:id="${cart.id}" class="form-control"
+														th:value="${cart.lineItem.quantity}" step="1" min="1" data-decimals="0"
+														required
+														onchange="handleCartQuantityChange(this.id, this.value)">
+												</div><!-- End .product-details-quantity -->
+											</td>
+											<td class="total-col" th:data-cart-id="${cart.id}"
+												th:text="${#numbers.formatDecimal(cart.lineItem.subtotal, 0, 'COMMA', 0, 'POINT')}+'₫'">
+											</td>
+
+											<td class="remove-col"><button th:id="${cart.id}" class="btn-remove"
+													onclick="clickToRemoveCart(id)"><i class="icon-close"></i></button>
+											</td>
+										</tr>
+									</tbody>
+								</table><!-- End .table table-wishlist -->
+							</div><!-- End .col-lg-9 -->
+							<aside class="col-lg-3">
+								<div class="summary summary-cart">
+									<h3 class="summary-title">Giá trị đơn hàng</h3><!-- End .summary-title -->
+
+									<table class="table table-summary">
+										<tbody>
+											<tr class="summary-subtotal">
+												<td>Sản phẩm:</td>
+												<td id="subtotal">0đ</td>
+											</tr><!-- End .summary-subtotal -->
+											<tr class="summary-shipping">
+												<td>Phí vận chuyển:</td>
+												<td>&nbsp;</td>
+											</tr>
+
+											<tr class="summary-shipping-row">
+												<td>
+													<div class="custom-control custom-radio">
+														<input type="radio" id="free-shipping" checked name="shipping"
+															class="custom-control-input" onchange="handleShipChange(0)">
+														<label class="custom-control-label" for="free-shipping">Miễn
+															phí:</label>
+													</div><!-- End .custom-control -->
+												</td>
+												<td id="free_ship" value="0">0đ</td>
+											</tr><!-- End .summary-shipping-row -->
+
+											<tr class="summary-shipping-row">
+												<td>
+													<div class="custom-control custom-radio">
+														<input type="radio" id="standart-shipping" name="shipping"
+															class="custom-control-input"
+															onchange="handleShipChange(10000)">
+														<label class="custom-control-label" for="standart-shipping">Tiêu
+															chuẩn:</label>
+													</div><!-- End .custom-control -->
+												</td>
+												<td id="stand_ship" value="10000">10.000đ</td>
+											</tr><!-- End .summary-shipping-row -->
+
+											<tr class="summary-shipping-row">
+												<td>
+													<div class="custom-control custom-radio">
+														<input type="radio" id="express-shipping" name="shipping"
+															class="custom-control-input"
+															onchange="handleShipChange(30000)">
+														<label class="custom-control-label" for="express-shipping">Hỏa
+															tốc:</label>
+													</div><!-- End .custom-control -->
+												</td>
+												<td id="express_ship" value="30000">30.000đ</td>
+											</tr><!-- End .summary-shipping-row -->
+
+											<tr class="summary-total">
+												<td>Thành tiền:</td>
+												<td id="total">đ</td>
+											</tr><!-- End .summary-total -->
+										</tbody>
+									</table><!-- End .table table-summary -->
+
+									<a onclick="checkout()" class="btn btn-outline-primary-2 btn-order btn-block">ĐẶT
+										HÀNG</a>
+								</div><!-- End .summary -->
+
+								<a href="product" class="btn btn-outline-dark-2 btn-block mb-3"><span>TIẾP TỤC MUA
+										SẮM</span><i class="icon-refresh"></i></a>
+							</aside><!-- End .col-lg-3 -->
+						</div><!-- End .row -->
+					</div><!-- End .container -->
+				</div><!-- End .cart -->
+			</div><!-- End .page-content -->
+		</main><!-- End .main -->
+
+	</div><!-- End .page-wrapper -->
+	<button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+</body>
+
+
+<!-- molla/cart.html  22 Nov 2019 09:55:06 GMT -->
+
+</html>

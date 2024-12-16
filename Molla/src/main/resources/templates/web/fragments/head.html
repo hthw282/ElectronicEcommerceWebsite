@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:fragment="head">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Molla - Bootstrap eCommerce Template</title>
+	<meta name="keywords" content="HTML5 Template">
+	<meta name="description" content="Molla - Bootstrap eCommerce Template">
+	<meta name="author" content="p-themes">
+	<!-- Favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" href="assets/images/icons/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="assets/images/icons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="assets/images/icons/favicon-16x16.png">
+	<link rel="manifest" href="assets/images/icons/site.html">
+	<link rel="mask-icon" href="assets/images/icons/safari-pinned-tab.svg" color="#666666">
+	<link rel="shortcut icon" href="assets/images/icons/favicon.ico">
+	<meta name="apple-mobile-web-app-title" content="Molla">
+	<meta name="application-name" content="Molla">
+	<meta name="msapplication-TileColor" content="#cc9966">
+	<meta name="msapplication-config" content="assets/images/icons/browserconfig.xml">
+	<meta name="theme-color" content="#ffffff">
+	<link rel="stylesheet" href="assets/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css">
+	<!-- Plugins CSS File -->
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/plugins/owl-carousel/owl.carousel.css">
+	<link rel="stylesheet" href="assets/css/plugins/magnific-popup/magnific-popup.css">
+	<link rel="stylesheet" href="assets/css/plugins/jquery.countdown.css">
+	<link rel="stylesheet" href="assets/css/plugins/nouislider/nouislider.css">
+	<!-- Main CSS File -->
+	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" href="assets/css/demos/demo-3.css">
+	<style>
+		.custom-control-inputtt[type="checkbox"] {
+			position: relative;
+			width: 20px;
+			height: 20px;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+			background-color: #fff;
+			border: 2px solid #ccc;
+			border-radius: 4px;
+			cursor: pointer;
+			margin: 0 10px;
+		}
+
+		.custom-control-inputtt[type="checkbox"]:checked {
+			background-color: dimgray;
+			border-color: dimgray;
+		}
+
+		.custom-control-inputtt[type="checkbox"]:checked::before {
+			content: '\2713';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			color: #fff;
+			font-size: 16px;
+			font-weight: bold;
+		}
+
+		.popup {
+			display: none;
+			/* Ẩn popup theo mặc định */
+			position: fixed;
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgba(0, 0, 0, 0.5);
+			/* Màu nền mờ */
+		}
+
+		.popup-content {
+			background-color: #fff;
+			margin: 15% auto;
+			padding: 20px;
+			border: 1px solid #888;
+			width: 80%;
+			max-width: 500px;
+			box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+		}
+
+		.close-btn {
+			color: #aaa;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+		}
+
+		.close-btn:hover,
+		.close-btn:focus {
+			color: black;
+			text-decoration: none;
+			cursor: pointer;
+		}
+
+		.rating {
+			margin-bottom: 20px;
+		}
+
+		.stars {
+			display: flex;
+			flex-direction: row-reverse;
+			justify-content: flex-end;
+		}
+
+		.stars input {
+			display: none;
+		}
+
+		.stars label {
+			display: inline-block;
+			width: 25px;
+			height: 25px;
+			background: url("assets/images/ic_star.png") no-repeat center;
+			background-size: 25px;
+			cursor: pointer;
+		}
+
+		.stars input:checked~label,
+		.stars label:hover,
+		.stars label:hover~label {
+			background: url("assets/images/ic_star_select.png") no-repeat center;
+			background-size: 25px;
+		}
+	</style>
+</head>
+
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-admin.html}">
+
+<head th:replace="admin/fragments/head :: head">
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper" layout:fragment="content">
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>Quản lí Khách Hàng</h1>
+				<ol class="breadcrumb">
+					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="#">Examples</a></li>
+					<li class="active">Blank page</li>
+				</ol>
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+
+				<!-- Default box -->
+				<div class="col-md-8">
+					<!-- general form elements -->
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Chỉnh sửa khách hàng</h3>
+						</div>
+						<!-- /.box-header -->
+						<!-- form start -->
+
+
+
+						<div class="box-body">
+							<form role="form" method="post" th:action="@{/admin/update-user}" th:object="${user}">
+								<input type="hidden" class="form-control" name="userid" placeholder="id"
+									th:field="*{id}">
+
+								<div class="form-group ">
+									<label for="exampleInputEmail1">Họ Tên</label>
+									<input style="border-color: #2db607" type="text" class="form-control" name="name"
+										placeholder="Name" th:field="*{fullname}">
+								</div>
+
+								<div class="form-group">
+									<label for="exampleInputEmail1">Ngày sinh</label>
+									<input style="border-color: #2db607" type="text" class="form-control" name="name"
+										placeholder="Brithdate (yyyy-mm-dd)" th:field="*{birthdate}">
+								</div>
+
+								<div class="form-group">
+									<label for="exampleInputEmail1">địa chỉ</label>
+									<input style="border-color: #2db607" type="text" class="form-control" name="name"
+										placeholder="Name" th:field="*{address}">
+								</div>
+
+								<div class="form-group">
+									<label for="exampleInputEmail1">Số điện hoại </label>
+									<input style="border-color: #2db607" type="text" class="form-control" name="name"
+										placeholder="Name" th:field="*{phone}">
+								</div>
+
+								<div class="form-group">
+									<label for="exampleInputEmail1">Email</label>
+									<input style="border-color: #2db607" type="text" class="form-control" name="name"
+										placeholder="Name" th:field="*{email}">
+								</div>
+
+								<div class="form-group">
+									<label for="exampleInputEmail1">Trạng thái</label>
+									<select style="border-color: #2db607" class="form-control" name="state"
+										th:field="*{state}">
+										<option value="0">Đang hoạt động</option>
+										<option value="1">Không hoạt động</option>
+										<option value="2">Tạm khóa</option>
+										<option value="3">Khóa vĩnh viễn</option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label for="exampleInputEmail1">Thông báo qua email</label>
+									<select style="border-color: #2db607" class="form-control" name="state"
+										th:field="*{notify}">
+										<option value="1">Thông báo</option>
+										<option value="0">Không thông báo</option>
+									</select>
+								</div>
+
+								<button type="submit" class="btn btn-primary">Cập nhật</button>
+							</form>
+
+						</div>
+
+					</div>
+
+				</div>
+			</section>
+		</div>
+	</div>
+
+	<script th:src="@{/admin/js/jquery.min.js}"></script>
+	<script th:src="@{/admin/js/jquery-ui.js}"></script>
+	<script th:src="@{/admin/js/bootstrap.min.js}"></script>
+	<script th:src="@{/admin/js/adminlte.min.js}"></script>
+	<script th:src="@{/admin/js/dashboard.js}"></script>
+	<script th:src="@{/admin/tinymce/tinymce.min.js}"></script>
+	<script th:src="@{/admin/tinymce/config.js}"></script>
+	<script th:src="@{/admin/js/function.js}"></script>
+</body>
+
+</html>

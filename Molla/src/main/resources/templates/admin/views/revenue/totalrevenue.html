@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-admin.html}">
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper" layout:fragment="content">
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Main content -->
+			<section class="content">
+				<!-- Default box -->
+				<div class="col-xs-12">
+					<h3>
+						Tổng Doanh thu năm 2024 đến hiện tại: <span th:text="${t2024 != null ? t2024 : 0}"> </span>
+						<span>
+							(VND)</span>
+					</h3>
+					<div class="box">
+						<div class="container mt-4">
+							<label for="yearSelect">Select Year:</label>
+							<select id="yearSelect" name="yearSelect" onchange="updateChart()">
+								<option th:selected="${selectedYear == year}" th:each="year : ${years}" th:text="${year}" th:value="${year}"></option>
+							</select>
+
+							<canvas id="revenueChart"></canvas>
+							<script th:inline="javascript">
+								/*<![CDATA[*/
+								function updateChart() {
+									var selectedYear = document.getElementById('yearSelect').value;
+									window.location.href = '/admin/revenue?year=' + selectedYear;
+								}
+
+								document.addEventListener('DOMContentLoaded', function () {
+									var monthlyRevenue = /*[[${monthlyRevenue}]]*/ {};
+
+									var labels = Object.keys(monthlyRevenue);
+									var data = Object.values(monthlyRevenue);
+									console.log(monthlyRevenue);
+									var ctx = document.getElementById('revenueChart').getContext('2d');
+									var myChart = new Chart(ctx, {
+										type: 'bar',
+										data: {
+											labels: labels,
+											datasets: [{
+												label: 'Doanh thu tháng',
+												data: data,
+												backgroundColor: 'rgb(75, 192, 192)',
+												borderColor: 'rgb(75, 192, 192)',
+												borderWidth: 1
+											}]
+										},
+										options: {
+											scales: {
+												x: {
+													title: {
+														display: true,
+														text: 'Tháng'
+													}
+												},
+												y: {
+													beginAtZero: true,
+													title: {
+														display: true,
+														text: 'Doanh thu (VND)'
+													}
+												}
+											}
+										},
+										plugins: {
+											legend: {
+												display: true,
+												labels: {
+													color: 'black',
+													font: {
+														size: 14
+													}
+												},
+												title: {
+													display: true,
+													text: 'Chú thích'
+												}
+											},
+											tooltip: {
+												callbacks: {
+													label: function (context) {
+														let label = context.dataset.label || '';
+														if (label) {
+															label += ': ';
+														}
+														label += context.parsed.y + ' VND';
+														return label;
+													}
+												}
+											}
+										}
+									});
+								});
+							</script>
+						</div>
+					</div>
+
+					<!-- /.box -->
+				</div>
+				<!-- /.box -->
+
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+	</div>
+	<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+</body>
+
+</html>

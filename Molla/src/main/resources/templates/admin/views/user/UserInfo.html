@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-admin.html}">
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper" layout:fragment="content">
+		<!-- Content Wrapper. Contains page content -->
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>Quản lí Khách Hàng</h1>
+				<ol class="breadcrumb">
+					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="#">Examples</a></li>
+					<li class="active">Blank page</li>
+				</ol>
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+
+				<!-- Default box -->
+
+				<div class="col-md-8  ">
+					<!-- general form elements -->
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title">Thông tin khách hàng</h3>
+
+						</div>
+						<!-- /.box-header -->
+						<!-- form start -->
+
+
+						<div class="box-body ">
+
+							<div class="form-group">
+								<label>Họ tên</label>
+								<div class="form-control">
+
+									<p th:text=" ${user.fullname}"></p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label>Ngày sinh</label>
+								<div class="form-control">
+
+									<p th:text=" ${user.birthdate}"></p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label>Địa chỉ</label>
+								<div class="form-control">
+
+									<p th:text=" ${user.address}"></p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label>Số điện thoại</label>
+								<div class="form-control">
+
+									<p th:text=" ${user.phone}"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Email</label>
+								<div class="form-control">
+
+									<p th:text=" ${user.email}"></p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label>Trạng thái</label>
+								<div class="form-control">
+									<p th:if="${user.state==0}">Đang hoạt động</p>
+									<p th:if="${user.state==1}">Không hoạt động</p>
+									<p th:if="${user.state==2}">Tạm khóa</p>
+									<p th:if="${user.state==3}">Khóa vĩnh viễn</p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label>Thông báo qua email</label>
+								<div class="form-control">
+									<p th:text=" ${user.isNotify}"></p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label>Tên tài khoản</label>
+								<div class="form-control">
+									<p th:text=" ${user.account.username}"></p>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<a th:href="@{/admin/update-user/{id}(id=${user.id})}" class="btn btn-success">Chỉnh
+									sửa</a>
+							</div>
+
+						</div>
+
+					</div>
+
+
+
+
+
+				</div>
+		</div>
+		<!-- /.box -->
+	</div>
+	<!-- /.box -->
+	</section>
+	<!-- /.content -->
+
+	</div>
+
+	<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+
+	<script th:src="@{/admin/js/jquery.min.js}"></script>
+	<script th:src="@{/admin/js/jquery-ui.js}"></script>
+	<script th:src="@{/admin/js/bootstrap.min.js}"></script>
+	<script th:src="@{/admin/js/adminlte.min.js}"></script>
+	<script th:src="@{/admin/js/dashboard.js}"></script>
+	<script th:src="@{/admin/tinymce/tinymce.min.js}"></script>
+	<script th:src="@{/admin/tinymce/config.js}"></script>
+	<script th:src="@{/admin/js/function.js}"></script>
+</body>
+
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-web.html}">
+
+<body>
+	<div class="page-wrapper" layout:fragment="content">
+		<main class="main">
+			<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+				<div class="container">
+					<h1 class="page-title">My Account<span>Shop</span></h1>
+				</div><!-- End .container -->
+			</div><!-- End .page-header -->
+			<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+				<div class="container">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="home">Trang chủ</a></li>
+						<li class="breadcrumb-item active" aria-current="page">Hồ sơ</li>
+					</ol>
+				</div><!-- End .container -->
+			</nav><!-- End .breadcrumb-nav -->
+
+			<div class="page-content">
+				<div class="dashboard">
+					<div class="container">
+						<div class="row">
+							<aside class="col-md-4 col-lg-2">
+								<ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+									<li class="nav-item">
+										<a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account"
+											role="tab" aria-controls="tab-account" aria-selected="false">Thông tin cá
+											nhân</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders"
+											role="tab" aria-controls="tab-orders" aria-selected="false">Lịch sử đơn
+											hàng</a>
+									</li>
+								</ul>
+							</aside><!-- End .col-lg-3 -->
+
+							<div class="col-md-8 col-lg-10">
+								<div class="tab-content">
+									<div class="tab-pane fade show active" id="tab-account" role="tabpanel"
+										aria-labelledby="tab-account-link">
+										<th:block th:if="${user == null}">
+											<p></p>
+										</th:block>
+										<th:block th:unless="${user == null}">
+											<form role="form" method="post" th:action="@{/web/update-infor}"
+												th:object="${user}">
+												<input type="hidden" class="form-control" th:field="*{id}">
+												<div class="row">
+													<div class="col-sm-6">
+														<label>Tên *</label>
+														<input type="text" class="form-control" name="fullname"
+															placeholder="Tên" th:field="*{fullname}">
+													</div><!-- End .col-sm-6 -->
+
+													<div class="col-sm-6">
+														<label>Ngày sinh *</label>
+														<input type="date" class="form-control" name="birthdate"
+															th:field="*{birthdate}">
+													</div><!-- End .col-sm-6 -->
+												</div><!-- End .row -->
+
+												<label>Địa chỉ *</label>
+												<input type="text" class="form-control" name="address"
+													placeholder="Địa chỉ" th:field="*{address}">
+
+												<div class="row">
+													<div class="col-sm-6">
+														<label>Email *</label>
+														<input type="email" class="form-control" name="email"
+															placeholder="Email" th:field="*{email}">
+													</div><!-- End .col-sm-6 -->
+
+													<div class="col-sm-6">
+														<label>Số điện thoại *</label>
+														<input type="text" class="form-control" name="phone"
+															placeholder="Số điện thoại" th:field="*{phone}">
+													</div><!-- End .col-sm-6 -->
+												</div><!-- End .row -->
+												<!--<a th:href="@{/web/update-infor/{id}(id=${user.id})}" class="btn btn-block btn-outline-primary-2">Chỉnh sửa</a>-->
+												<button type="submit" class="btn btn-outline-primary-2">
+													<span>UPDATE</span>
+													<i class="icon-long-arrow-right"></i>
+												</button>
+											</form>
+										</th:block>
+									</div><!-- .End .tab-pane -->
+									<div class="tab-pane fade" id="tab-orders" role="tabpanel"
+										aria-labelledby="tab-orders-link">
+										<th:block th:if="${list == null}">
+											<p>Chưa có đơn hàng nào được đặt.</p>
+											<a href="/" class="btn btn-outline-primary-2"><span>GO SHOP</span><i
+													class="icon-long-arrow-right"></i></a>
+										</th:block>
+										<th:block th:unless="${list == null}">
+											<table class="table">
+												<thead>
+													<tr>
+														<th>Mã hóa đơn</th>
+														<th>Ngày đặt hàng</th>
+														<th>Số điện thoại</th>
+														<th>Địa chỉ</th>
+														<th>Tổng đơn</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each="list: ${list}">
+														<td th:text="${list.id}"></td>
+														<td th:text="${list.bill_date}"></td>
+														<td th:text="${list.phone_shipment}">0368256452</td>
+														<td th:text="${list.address_shipment}">Chung cư 4S, linh đông,
+															thủ đức, hồ chí minh</td>
+														<td th:text="${list.total_price}"></td>
+														<td>
+															<a th:href="'bill-detail?id='+${list.id}"
+																class="btn btn-block btn-outline-primary-2">Chi
+																tiết</a>
+														</td>
+													</tr>
+
+												</tbody>
+											</table>
+										</th:block>
+									</div><!-- .End .tab-pane -->
+
+								</div>
+							</div><!-- End .col-lg-9 -->
+						</div><!-- End .row -->
+					</div><!-- End .container -->
+				</div><!-- End .dashboard -->
+			</div><!-- End .page-content -->
+		</main><!-- End .main -->
+	</div>
+	<!-- Plugins JS File -->
+	<script th:src="@{/assets/js/jquery.min.js}"></script>
+	<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/assets/js/jquery.hoverIntent.min.js}"></script>
+	<script th:src="@{/assets/js/jquery.waypoints.min.js}"></script>
+	<script th:src="@{/assets/js/superfish.min.js}"></script>
+	<script th:src="@{/assets/js/owl.carousel.min.js}"></script>
+	<script th:src="@{/assets/js/bootstrap-input-spinner.js}"></script>
+	<script th:src="@{/assets/js/jquery.plugin.min.js}"></script>
+	<script th:src="@{/assets/js/jquery.magnific-popup.min.js}"></script>
+	<script th:src="@{/assets/js/jquery.countdown.min.js}"></script>
+	<!-- Main JS File -->
+	<script th:src="@{/assets/js/main.js}"></script>
+	<script th:src="@{/assets/js/demos/demo-3.js}"></script>
+</body>
+
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-web.html}">
+
+<body>
+    <div class="page-wrapper" layout:fragment="content">
+		<main class="main">
+		    <div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17" style="background-image: url('assets/images/backgrounds/login-bg.jpg')">
+		        <div class="container">
+		            <div class="form-box">
+		                <div class="form-tab">
+		                    <ul class="nav nav-pills nav-fill" role="tablist">
+		                        <li class="nav-item">
+		                            <a class="nav-link active" id="register-tab-2" href="#" role="tab" aria-controls="register-2" aria-selected="true">Đăng kí</a>
+		                        </li>
+		                    </ul>
+		                    <div class="tab-content">
+		                        <div class="tab-pane fade show active" id="register-2" role="tabpanel" aria-labelledby="register-tab-2">
+		                            <form th:action="@{/register}" method="post" role="form" th:object="${account}">
+		                                <div class="form-group">
+		                                    <label for="register-username-2">Tên đăng nhập *</label>
+		                                    <input th:field="*{username}" type="text" class="form-control" id="register-username-2" name="register-username" required>
+		                                </div><!-- End .form-group -->
+		
+		                                <div class="form-group">
+		                                    <label for="register-password-2">Mật khẩu *</label>
+		                                    <input th:field="*{password}" type="password" class="form-control" id="register-password-2" name="register-password" required>
+		                                </div><!-- End .form-group -->
+		
+		                                <div class="form-footer">
+		                                    <button type="submit" class="btn btn-outline-primary-2">
+		                                        <span>ĐĂNG KÍ</span>
+		                                        <i class="icon-long-arrow-right"></i>
+		                                    </button>
+		
+		                                    <div class="custom-control custom-checkbox">
+		                                        <input type="checkbox" class="custom-control-input" id="register-policy-2" required>
+		                                        <label class="custom-control-label" for="register-policy-2">Tôi đồng ý với <a href="#">chính sách bảo mật</a> *</label>
+		                                    </div><!-- End .custom-checkbox -->
+		                                </div><!-- End .form-footer -->
+		                            </form>
+		                            <div class="form-choice" th:if="${registermessage != null}">
+		                                <p class="text-center"> [[${registermessage}]]</p>
+		                            </div><!-- End .form-choice -->
+		                            <div class="form-choice">
+		                                <p class="text-center"> Bạn đã có tài khoản <a th:href="@{/login}" class="text-center"> Đăng nhập ngay</a></p>
+		                            </div><!-- End .form-choice -->
+		                        </div><!-- .End .tab-pane -->
+		                    </div><!-- End .tab-content -->
+		                </div><!-- End .form-tab -->
+		            </div><!-- End .form-box -->
+		        </div><!-- End .container -->
+		    </div><!-- End .login-page section-bg -->
+		</main><!-- End .main -->
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+    <!-- Sign in / Register Modal -->
+    <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="icon-close"></i></span>
+                    </button>
+
+                    <div class="form-box">
+                        <div class="form-tab">
+                            <ul class="nav nav-pills nav-fill" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">Đăng kí</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="tab-content-5">
+                                <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+		                            <form th:action="@{/register}" method="post" role="form" th:object="${account}">
+                                        <div class="form-group">
+		                                    <label for="register-username">Tên đăng nhập *</label>
+		                                    <input th:field="*{username}" type="text" class="form-control" id="register-username" name="register-username" required>
+                                        </div><!-- End .form-group -->
+
+                                        <div class="form-group">
+		                                    <label for="register-password">Mật khẩu *</label>
+		                                    <input th:field="*{password}" type="password" class="form-control" id="register-password" name="register-password" required>
+                                        </div><!-- End .form-group -->
+
+                                        <div class="form-footer">
+                                            <button type="submit" class="btn btn-outline-primary-2">
+                                                <span>ĐĂNG KÍ</span>
+                                                <i class="icon-long-arrow-right"></i>
+                                            </button>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="register-policy" required>
+                                                <label class="custom-control-label" for="register-policy">Tôi đồng ý với <a href="#">chính sách bảo mật</a> *</label>
+                                            </div><!-- End .custom-checkbox -->
+                                        </div><!-- End .form-footer -->
+                                    </form>
+                                    <div class="form-choice" th:if="${registermessage != null}">
+		                                <p class="text-center"> [[${registermessage}]]</p>
+		                            </div><!-- End .form-choice -->
+		                            <div class="form-choice">
+		                                <p class="text-center"> Bạn đã có tài khoản <a th:href="@{/login}" class="text-center"> Đăng nhập ngay</a></p>
+		                            </div><!-- End .form-choice -->
+
+                                </div><!-- .End .tab-pane -->
+                            </div><!-- End .tab-content -->
+                        </div><!-- End .form-tab -->
+                    </div><!-- End .form-box -->
+                </div><!-- End .modal-body -->
+            </div><!-- End .modal-content -->
+        </div><!-- End .modal-dialog -->
+    </div><!-- End .modal -->
+
+    <!-- Plugins JS File -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/jquery.hoverIntent.min.js"></script>
+    <script src="assets/js/jquery.waypoints.min.js"></script>
+    <script src="assets/js/superfish.min.js"></script>
+    <script src="assets/js/owl.carousel.min.js"></script>
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
+</body>
+
+
+<!-- molla/login.html  22 Nov 2019 10:04:03 GMT -->
+</html>

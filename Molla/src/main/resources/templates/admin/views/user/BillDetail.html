@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout-admin.html}">
+
+<head th:replace="admin/fragments/head :: head">
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper" layout:fragment="content">
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>Chi tiết đơn hàng</h1>
+				<ol class="breadcrumb">
+					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="#">Examples</a></li>
+					<li class="active">Blank page</li>
+				</ol>
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+
+				<!-- Default box -->
+				<div class="col-xs-12">
+					<div class="box">
+						<div class="box-header">
+
+							<div class="box-tools">
+								<div class="input-group input-group-sm" style="width: 150px;">
+
+								</div>
+							</div>
+
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body table-responsive no-padding">
+							<div class="col-xs-12">
+								<div class="col-xs-4">
+
+									<h3 style="font-weight:bold">
+										Mã Hóa đơn: <span th:text="${bill.id}">
+									</h3>
+
+									<div class="d-flex">
+										<h4 class="bold">Khách Hàng:</h4>
+										<div th:text="${bill.user.fullname}"></div>
+									</div>
+									<div class="d-flex">
+										<h4 class="bold">Ngày đặt:</h4>
+										<div th:text="${bill.bill_date}"></div>
+									</div>
+									<div class="d-flex">
+										<h4 class="bold">Địa chỉ:</h4>
+										<div th:text="${bill.address_shipment}"></div>
+									</div>
+									<div class="d-flex">
+										<h4 class="bold">Số điện thoại:</h4>
+										<div th:text="${bill.phone_shipment}"></div>
+									</div>
+
+
+									<hr class="my-1">
+									<div class="d-flex">
+										<h4 class="bold">Tổng sản phẩm</h4>
+										<div class="ml-auto font-weight-bold" th:text="${bill.product_price}"></div>
+									</div>
+									<div class="d-flex">
+										<h4 class="bold">Phí ship</h4>
+										<div class="ml-auto font-weight-bold" th:text="${bill.ship}"></div>
+									</div>
+									<div class="d-flex">
+										<h4 class="bold">Mã Giảm giá</h4>
+
+										<div>
+											<div class="ml-auto font-weight-bold"
+												th:text="${bill?.promotionalCode?.id}"></div>
+										</div>
+
+
+									</div>
+									<hr>
+									<div class="d-flex gr-total">
+										<h5 class="bold">Tổng giá đơn</h5>
+										<div class="ml-auto h5" th:text="${bill.total_price}"></div>
+									</div>
+									<hr>
+								</div>
+
+								<div class="col-xs-8">
+									<div class="table-main table-responsive"
+										style="display: flex; justify-content: center; align-items: center; height: 70vh;">
+										<table class="table">
+											<thead>
+												<tr>
+													<th>Images</th>
+													<th>Product Name</th>
+													<th>Price</th>
+													<th>Quantity</th>
+													<th>Total</th>
+
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="listtrans: ${listtrans}">
+													<td><img th:src="@{'/assets/images/products/' + ${listtrans.lineItem.product.picture}}"
+															alt="User Image" style="height: 100px; weight: 100px">
+													</td>
+													<td class="name-pr" style="padding-top: 40px;"
+														th:text="${listtrans.lineItem.product.name}"></td>
+													<td class="price-pr" style="padding-top: 40px;"
+														th:text="${listtrans.lineItem.product.selling_price}">
+
+													</td>
+													<td th:text="${listtrans.lineItem.quantity}"
+														style="padding-top: 40px;"></td>
+													<td class="total-pr" th:text="${listtrans.lineItem.subtotal}"
+														style="padding-top: 40px;"></td>
+
+												</tr>
+
+
+											</tbody>
+
+										</table>
+
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+
+					</div>
+					<!-- /.box-body -->
+				</div>
+				<!-- /.box -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+	</div>
+	<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+
+	<script th:src="@{/admin/js/jquery.min.js}"></script>
+	<script th:src="@{/admin/js/jquery-ui.js}"></script>
+	<script th:src="@{/admin/js/bootstrap.min.js}"></script>
+	<script th:src="@{/admin/js/adminlte.min.js}"></script>
+	<script th:src="@{/admin/js/dashboard.js}"></script>
+	<script th:src="@{/admin/tinymce/tinymce.min.js}"></script>
+	<script th:src="@{/admin/tinymce/config.js}"></script>
+	<script th:src="@{/admin/js/function.js}"></script>
+</body>
+
+</html>
